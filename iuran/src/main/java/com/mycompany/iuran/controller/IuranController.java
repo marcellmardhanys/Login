@@ -1,6 +1,5 @@
 package com.mycompany.iuran.controller;
 
-import com.mycompany.iuran.model.Transaksi;
 import com.mycompany.iuran.model.User;
 import com.mycompany.iuran.model.Warga;
 import com.mycompany.iuran.util.HibernateUtil;
@@ -38,27 +37,6 @@ public class IuranController {
     public List<Warga> getListWarga() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM Warga ORDER BY id DESC", Warga.class).list();
-        } catch (Exception e) {
-            return Collections.emptyList();
-        }
-    }
-
-    public boolean simpanTransaksi(Transaksi t) {
-        Transaction tx = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            session.persist(t);
-            tx.commit();
-            return true;
-        } catch (Exception e) {
-            if (tx != null) tx.rollback();
-            return false;
-        }
-    }
-
-    public List<Transaksi> getListTransaksi() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Transaksi ORDER BY id DESC", Transaksi.class).list();
         } catch (Exception e) {
             return Collections.emptyList();
         }
